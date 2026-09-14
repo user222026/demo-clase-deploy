@@ -1,4 +1,4 @@
-import { reportsAPI, productsAPI } from '../services/api.js'
+ import { reportsAPI, productsAPI } from '../services/api.js'
 
 export class Dashboard {
   constructor() {
@@ -159,19 +159,14 @@ export class Dashboard {
     })
   }
 
-  async loadDashboardData() {
-    try {
-      // Load dashboard summary
-      const dashboardData = await reportsAPI.getDashboardSummary()
-      this.updateStats(dashboardData)
-
-      // Load products
+async loadDashboardData() {
+  try {
       const products = await productsAPI.getAll()
       this.updateProductsTable(products.results || products)
+     } catch (error) {
 
-    } catch (error) {
-      console.error('Error loading dashboard data:', error)
-      this.showError('Error al cargar los datos del dashboard')
+      console.error('Error loading products:', error)
+      this.showError('Error al cargar los productos')
     }
   }
 
@@ -241,5 +236,5 @@ export class Dashboard {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     window.location.reload()
-  }
-}
+    }
+} 
